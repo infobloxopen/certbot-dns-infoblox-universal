@@ -57,8 +57,7 @@ class Authenticator(dns_common.DNSAuthenticator):
             "Bloxone Infoblox credentials INI file",
             {
                 "api_key": "API Key for Bloxone Infoblox REST API.",
-                "view": "View to use for TXT entries "
-                "(leave blank is view is not necessary)",
+                "view": "View to use for TXT  record entries ",
             },
         )
 
@@ -82,17 +81,23 @@ class Authenticator(dns_common.DNSAuthenticator):
         result, _ = ViewApi(self.infoclient).list(
             filter=f'name=="{view_name}"', inherit="full"
         )
-        view = result[1][0].id
 
-        if not view:
+        if not result[1]:
             raise ValueError(f"View '{view_name}' not found.")
 
-        zone = AuthZoneApi(self.infoclient).list(
+        view_id = result[1][0].id
+
+        zones = AuthZoneApi(self.infoclient).list(
             filter=f'fqdn=="{domain}"', inherit="full"
         )
 
-        if zone.results:
-            zone_id = zone.results[0].id
+        zone_id = None
+        for zone in zones.results:
+            if zone.view == view_id:
+                zone_id = zone.id
+
+        if zone_id:
+            logger.debug(f"Zone '{domain}' found with ID {zone_id}")
         else:
             raise ValueError(f"Zone '{domain}' not found.")
 
