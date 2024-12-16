@@ -16,15 +16,9 @@ logger = logging.getLogger(__name__)
 @zope.interface.implementer(interfaces.IAuthenticator)
 @zope.interface.provider(interfaces.IPluginFactory)
 class Authenticator(dns_common.DNSAuthenticator):
-    """DNS Authenticator for Infoblox Universal
-    This Authenticator uses the Infoblox REST API to fulfill a
-    dns-01 challenge.
-    """
+    """DNS Authenticator for Infoblox Universal using the Infoblox REST API."""
 
-    description = (
-        "Obtain certificates using a DNS TXT record "
-        "(if you are using Infoblox Universal for DNS)."
-    )
+    description = "Obtain certificates using a DNS TXT record (Infoblox Universal)."
     ttl = 300
 
     def __init__(self, *args, **kwargs):
@@ -69,12 +63,10 @@ class Authenticator(dns_common.DNSAuthenticator):
                 client_name="certbot",
             )
             self.infoclient = bloxone_client.ApiClient(config)
-
         return self.infoclient
 
     def _get_infoblox_record(self, domain, validation_name, validation):
         self._get_infoblox_client()
-
         # get view identifier
         view_name = self.credentials.conf("view") or "default"
 
@@ -84,21 +76,17 @@ class Authenticator(dns_common.DNSAuthenticator):
 
         if not result[1]:
             raise ValueError(f"View '{view_name}' not found.")
-
         view_id = result[1][0].id
 
         zones = AuthZoneApi(self.infoclient).list(
             filter=f'fqdn=="{domain}"', inherit="full"
         )
 
-        zone_id = None
-        for zone in zones.results:
-            if zone.view == view_id:
-                zone_id = zone.id
+        zone_id = next(
+            (zone.id for zone in zones.results if zone.view == view_id), None
+        )
 
-        if zone_id:
-            logger.debug(f"Zone '{domain}' found with ID {zone_id}")
-        else:
+        if not zone_id:
             raise ValueError(f"Zone '{domain}' not found.")
 
         return {

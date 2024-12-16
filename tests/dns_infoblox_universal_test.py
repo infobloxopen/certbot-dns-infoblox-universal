@@ -37,7 +37,6 @@ class TestAuthenticator(unittest.TestCase):
         )
         mock_auth_zone_api.return_value.list.return_value = MagicMock(
             results=[MagicMock(id="zone-id")]
-            # mock_auth_zone_api.return_value.list.return_value = MagicMock(results=[{'id': 'zone-id'}])
         )
         domain = "example.com"
         validation_name = "_acme-challenge.example.com"

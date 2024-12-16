@@ -1,24 +1,24 @@
 """
-The `~certbot_dns_infoblox_universal.dns_infoblox_universal` plugin automates the process of
-completing a ``dns-01`` challenge (`~acme.challenges.`) by creating, and
-subsequently removing, TXT records using the Infoblox REST API.
+The `~certbot_dns_infoblox_universal.dns_infoblox_universal` plugin
+automates the process of completing a ``dns-01`` challenge
+(`~acme.challenges.`) by creating, and subsequently removing,
+TXT records using the Infoblox Universal REST API.
 
 Named Arguments
 ---------------
-========================================  =====================================
+=============================================================================
 ``--dns-infoblox-universal-credentials``            Infoblox Remote API credentials
                                           INI file. (Default:
                                           /etc/letsencrypt/infoblox.ini)
-``--dns-infoblox-universal-propagation-seconds``    The number of seconds to wait for DNS
-                                          to propagate before asking the ACME
-                                          server to verify the DNS record.
+``--dns-infoblox-universal-propagation-seconds``    The number of seconds
+                                          to wait for DNS to propagate before asking
+                                           the ACME server to verify the DNS record.
                                           (Default: 10)
-========================================  =====================================
+=============================================================================
 
 Credentials
 -----------
-Use of this plugin requires a configuration file containing Infoblox Remote
-WAPI credentials.
+Use of this plugin requires a configuration file containing Infoblox credentials.
 
 .. code-block:: ini
    :name: credentials.ini
