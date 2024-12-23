@@ -24,7 +24,7 @@ class Authenticator(dns_common.DNSAuthenticator):
     def __init__(self, *args, **kwargs):
         super(Authenticator, self).__init__(*args, **kwargs)
         self.credentials = None
-        self.csp_url = "https://stage.csp.infoblox.com"
+        self.csp_url = "https://csp.infoblox.com"
         self.infoclient = None
         self.infotxts = []
 
