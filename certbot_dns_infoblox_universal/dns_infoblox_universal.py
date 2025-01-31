@@ -24,7 +24,7 @@ class Authenticator(dns_common.DNSAuthenticator):
     def __init__(self, *args, **kwargs):
         super(Authenticator, self).__init__(*args, **kwargs)
         self.credentials = None
-        self.csp_url = "https://csp.infoblox.com"
+        self.portal_url = "https://csp.infoblox.com"
         self.infoclient = None
         self.infotxts = []
 
@@ -58,8 +58,8 @@ class Authenticator(dns_common.DNSAuthenticator):
     def _get_infoblox_client(self):
         if not self.infoclient:
             config = universal_ddi_client.Configuration(
-                csp_url=self.csp_url,
-                api_key=self.credentials.conf("api_key"),
+                portal_url=self.portal_url,
+                portal_key=self.credentials.conf("api_key"),
                 client_name="certbot",
             )
             self.infoclient = universal_ddi_client.ApiClient(config)
