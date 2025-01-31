@@ -1,0 +1,2 @@
+universal-ddi-python-client>=0.1.0
+zope.interface>=7.1.1
