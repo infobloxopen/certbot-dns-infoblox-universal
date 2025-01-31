@@ -18,7 +18,7 @@ setup(
     package_dir={"certbot_dns_infoblox_universal": "certbot_dns_infoblox_universal"},
     install_requires=[
         "universal-ddi-python-client>=0.1.0",
-        "zope.interface==7.1.1",
+        "zope.interface>=7.1.1",
     ],
     entry_points={
         "certbot.plugins": [
