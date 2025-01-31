@@ -9,7 +9,7 @@ with open("README.md") as readme_file:
 setup(
     name="certbot-dns-infoblox-universal",
     version="0.1.0",
-    description="Certbot plugin for Infoblox Universal for DNS-01 Challenge",
+    description="Certbot plugin for Infoblox Universal DDI for DNS-01 Challenge",
     long_description=readme,
     long_description_content_type="text/markdown",
     author="Infoblox",
@@ -17,7 +17,7 @@ setup(
     packages=["certbot_dns_infoblox_universal"],
     package_dir={"certbot_dns_infoblox_universal": "certbot_dns_infoblox_universal"},
     install_requires=[
-        "bloxone-python-client==0.1.0",
+        "universal-ddi-python-client>=0.1.0",
         "zope.interface==7.1.1",
     ],
     entry_points={

@@ -1,7 +1,7 @@
 certbot-dns-infoblox-universal
 ====================
 
-Infoblox Universal DNS Authenticator plugin for Certbot
+Infoblox Universal DDI DNS Authenticator plugin for Certbot
 
 This plugin automates the process of completing a ``dns-01`` challenge by
 creating, and subsequently removing, TXT records using the Infoblox Remote API.

@@ -1,9 +1,9 @@
-"""DNS Authenticator for Infoblox Universal."""
+"""DNS Authenticator for Infoblox Universal DDI."""
 
 import logging
 import time
 
-import bloxone_client
+import universal_ddi_client
 import zope.interface
 from certbot import interfaces
 from certbot.plugins import dns_common
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 @zope.interface.implementer(interfaces.IAuthenticator)
 @zope.interface.provider(interfaces.IPluginFactory)
 class Authenticator(dns_common.DNSAuthenticator):
-    """DNS Authenticator for Infoblox Universal using the Infoblox REST API."""
+    """DNS Authenticator for Infoblox Universal DDI using the Infoblox REST API."""
 
     description = "Obtain certificates using a DNS TXT record (Infoblox Universal)."
     ttl = 300
@@ -42,27 +42,27 @@ class Authenticator(dns_common.DNSAuthenticator):
     def more_info(self):
         return (
             "This plugin configures a DNS TXT record to respond to a "
-            "dns-01 challenge using the bloxone Infoblox Remote REST API."
+            "dns-01 challenge using the Universal DDI Infoblox Remote REST API."
         )
 
     def _setup_credentials(self):
         self.credentials = self._configure_credentials(
             "credentials",
-            "Bloxone Infoblox credentials INI file",
+            "Universal DDI Infoblox credentials INI file",
             {
-                "api_key": "API Key for Bloxone Infoblox REST API.",
+                "api_key": "API Key for Universal DDI Infoblox REST API.",
                 "view": "View to use for TXT  record entries ",
             },
         )
 
     def _get_infoblox_client(self):
         if not self.infoclient:
-            config = bloxone_client.Configuration(
+            config = universal_ddi_client.Configuration(
                 csp_url=self.csp_url,
                 api_key=self.credentials.conf("api_key"),
                 client_name="certbot",
             )
-            self.infoclient = bloxone_client.ApiClient(config)
+            self.infoclient = universal_ddi_client.ApiClient(config)
         return self.infoclient
 
     def _get_infoblox_record(self, domain, validation_name, validation):
